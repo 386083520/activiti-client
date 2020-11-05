@@ -1,6 +1,6 @@
 <template>
   <div>
-    hello
+    <el-button>fff</el-button>
   </div>
 </template>
 
@@ -14,5 +14,5 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 </style>
