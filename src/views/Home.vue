@@ -21,7 +21,11 @@
         <menu-bar></menu-bar>
       </el-aside>
       <el-container>
-        <el-main>Main</el-main>
+        <el-main style="padding: 0">
+          <i :class="[isCollapse? 'el-icon-s-unfold': 'el-icon-s-fold',  'arrow-icon']" @click="iconClick"></i>
+          <tabs></tabs>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </el-container>
@@ -29,15 +33,31 @@
 
 <script>
 import MenuBar from '../components/MenuBar'
+import Tabs from '../components/Tabs'
+import { mapState } from 'vuex'
 export default {
   name: 'Home',
   components: {
-    MenuBar
+    MenuBar,
+    Tabs
+  },
+  computed: {
+    ...mapState({
+      isCollapse: state => state.MenuStore.isCollapse
+    })
+  },
+  methods: {
+    iconClick () {
+      this.$store.commit('setCollapse')
+    }
   }
 }
 </script>
 
 <style scoped lang="scss" type="text/scss">
+  /deep/ .el-tabs__header {
+    position: static;
+  }
   .home {
     height: 100%;
     .header {
@@ -62,6 +82,17 @@ export default {
           font-size: 14px;
         }
       }
+    }
+    .arrow-icon {
+      font-size: 24px;
+      border: 1px solid transparent;
+      height: 39px;
+      width: 40px;
+      text-align: center;
+      line-height: 39px;
+      float: left;
+      z-index: 1000;
+      cursor: pointer;
     }
   }
 </style>

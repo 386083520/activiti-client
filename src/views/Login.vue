@@ -103,8 +103,15 @@ export default {
           formData.append('code', that.loginForm.code)
           let {data: res} = await that.$http.post('/api/user/login', formData)
           if (res.code === 1) {
+            let menuList = res.data.menuList
+            let routerList = res.data.routerList
+            let authList = res.data.authList
             sessionStorage.setItem('token', res.data.token)
             sessionStorage.setItem('userId', res.data.userId)
+            sessionStorage.setItem('menuList', JSON.stringify(menuList))
+            sessionStorage.setItem('routerList', JSON.stringify(routerList))
+            sessionStorage.setItem('authList', JSON.stringify(authList))
+            this.$store.commit('getMenuList', this.$router)
             this.$router.push('/home')
           } else {
             that.$message.error(res.msg)
