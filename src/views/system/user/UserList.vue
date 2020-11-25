@@ -6,7 +6,14 @@
 
 <script>
 export default {
-  name: 'UserList'
+  name: 'UserList',
+  mounted () {
+    this.$http.post('/system/sys-user/findUsers')
+  },
+  data () {
+    return {
+    }
+  }
 }
 </script>
 

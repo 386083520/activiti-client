@@ -34,7 +34,7 @@
             <el-input v-model="loginForm.code" placeholder="请输入验证码"></el-input>
           </el-col>
           <el-col :span="8">
-            <el-input v-model="loginForm.code" readonly placeholder="点击刷新"></el-input>
+            <img :src="imgSrc" class="code-img" @click="getImage"/>
           </el-col>
         </el-row>
       </el-form-item>
@@ -57,6 +57,7 @@ export default {
   name: 'Login',
   data () {
     return {
+      imgSrc: '',
       loginForm: {
         username: '',
         password: '',
@@ -87,7 +88,16 @@ export default {
       }
     }
   },
+  created () {
+    this.getImage()
+  },
   methods: {
+    getImage () {
+      let res =
+        'http://127.0.0.1:8080/system/sys-user/image?t=' + new Date().getTime()
+      this.imgSrc = res
+      console.log('gsd', this.imgSrc)
+    },
     submit () {
       let that = this
       this.$refs.loginForm.validate(async valid => {
@@ -101,7 +111,7 @@ export default {
           formData.append('username', that.loginForm.username)
           formData.append('password', that.loginForm.password)
           formData.append('code', that.loginForm.code)
-          let {data: res} = await that.$http.post('/api/user/login', formData)
+          let {data: res} = await that.$http.post('/system/sys-user/login', formData)
           if (res.code === 1) {
             let menuList = res.data.menuList
             let routerList = res.data.routerList
@@ -138,6 +148,10 @@ export default {
       }
       .my-button {
         width: 100%;
+      }
+      .code-img {
+        width: 100%;
+        cursor: pointer;
       }
     }
   }
