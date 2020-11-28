@@ -7,12 +7,12 @@
           <img src="../assets/images/avatar.jpg" class="user-img">
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+            <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <div class="user-role">
           <div class="welcome">管理员，欢迎你</div>
-          <div class="header-time">2020-08-11 22:22:16 星期五</div>
+          <div class="header-time">{{date}}</div>
         </div>
       </div>
     </el-header>
@@ -41,14 +41,66 @@ export default {
     MenuBar,
     Tabs
   },
+  data () {
+    return {
+      date: ''
+    }
+  },
   computed: {
     ...mapState({
       isCollapse: state => state.MenuStore.isCollapse
     })
   },
+  mounted () {
+    let that = this
+    this.showTime()
+    setInterval(function () {
+      that.showTime()
+    }, 1000)
+  },
   methods: {
     iconClick () {
       this.$store.commit('setCollapse')
+    },
+    async logout () {
+      let { data: res } = await this.$http.post('/system/sys-user/loginout')
+      if (res.code === 1) {
+        sessionStorage.clear()
+        window.location.href = '/'
+      }
+    },
+    showTime () {
+      let week = [
+        '星期日',
+        '星期一',
+        '星期二',
+        '星期三',
+        '星期四',
+        '星期五',
+        '星期六'
+      ]
+      let date = new Date()
+      let year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let day = date.getDate()
+      let hour = date.getHours()
+      let minutes = date.getMinutes()
+      let second = date.getSeconds()
+      this.date =
+        year +
+        '.' +
+        (month < 10 ? '0' + month : month) +
+        '.' +
+        day +
+        '' +
+        ' ' +
+        hour +
+        ':' +
+        minutes +
+        ':' +
+        (second < 10 ? '0' + second : second) +
+        ' ' +
+        (week[date.getDay()] || '')
     }
   }
 }

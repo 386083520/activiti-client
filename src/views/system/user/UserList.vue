@@ -8,7 +8,7 @@
 export default {
   name: 'UserList',
   mounted () {
-    this.$http.post('/system/sys-user/findUsers')
+    this.$http.get('/system/sys-user/findUsers')
   },
   data () {
     return {

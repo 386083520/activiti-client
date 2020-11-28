@@ -18,8 +18,34 @@ axios.interceptors.request.use(config => {
   } else {
     config.headers['Content-Type'] = 'application/json'
   }
+  config.headers.token = sessionStorage.getItem('token')
   return config
 })
+
+axios.interceptors.response.use(
+  response => {
+    if (response.status === 200) {
+      if (response.data.code === 601) {
+        sessionStorage.clear()
+        window.location.href = '/'
+        return response
+      } else {
+        return Promise.resolve(response)
+      }
+    } else {
+      return Promise.reject(response)
+    }
+  },
+  error => {
+    if (error.response.status) {
+      this.$message.error(error.response.data.msg)
+      if (error.response.data.code === 601) {
+        sessionStorage.clear()
+        window.location.href = '/'
+        return Promise.reject(error.response)
+      }
+    }
+  })
 
 Vue.use(ElementUI)
 /* eslint-disable no-new */
