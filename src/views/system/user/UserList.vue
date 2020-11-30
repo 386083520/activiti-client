@@ -1,14 +1,15 @@
 <template>
-  <div>
-    user
+  <div class="user-container">
+    <bpmn></bpmn>
   </div>
 </template>
 
 <script>
+import Bpmn from '../../../components/Bpmn'
 export default {
   name: 'UserList',
-  mounted () {
-    this.$http.get('/system/sys-user/findUsers')
+  components: {
+    Bpmn
   },
   data () {
     return {
@@ -17,6 +18,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss" type="text/scss">
+.user-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 </style>
