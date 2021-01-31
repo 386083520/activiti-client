@@ -54,15 +54,15 @@ Vue.use(ElementUI)
 router.beforeEach((to, from, next) => {
   store.commit('getTabs')
   store.commit('setActiveTabs', to.name)
-  let menuList = sessionStorage.getItem('menuList')
+  let token = sessionStorage.getItem('token')
   if (to.path === '/login') {
-    if (menuList) {
+    if (token) {
       next({path: '/home'})
     } else {
       next()
     }
   } else {
-    if (!menuList) {
+    if (!token) {
       next({path: '/login'})
     } else {
       if (store.state.MenuStore.menuList.length === 0) {
