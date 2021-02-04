@@ -9,9 +9,11 @@ import './assets/css/flex.css'
 import axios from 'axios'
 import store from './store'
 import Fragment from 'vue-fragment'
+import * as echarts from 'echarts'
 Vue.use(Fragment.Plugin)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
+Vue.prototype.$echarts = echarts
 axios.interceptors.request.use(config => {
   if (config.url.indexOf('/api/user/login') !== -1) {
     config.headers['Content-Type'] = 'multipart/form-data'
@@ -54,7 +56,7 @@ Vue.use(ElementUI)
 router.beforeEach((to, from, next) => {
   store.commit('getTabs')
   store.commit('setActiveTabs', to.name)
-  let token = sessionStorage.getItem('token')
+  /* let token = sessionStorage.getItem('token')
   if (to.path === '/login') {
     if (token) {
       next({path: '/home'})
@@ -72,7 +74,8 @@ router.beforeEach((to, from, next) => {
         next()
       }
     }
-  }
+  } */
+  next()
 })
 new Vue({
   el: '#app',

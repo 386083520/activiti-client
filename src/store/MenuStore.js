@@ -8,7 +8,7 @@ export default{
       {
         title: '首页',
         name: 'desktop',
-        content: 'fds'
+        content: ''
       }
     ],
     menuList: [],
