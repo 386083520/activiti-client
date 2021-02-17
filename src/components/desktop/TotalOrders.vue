@@ -4,8 +4,7 @@
       title="累积订单量"
       value="2,345,567">
       <template>
-        <div id="total-orders-chart" :style="{width: '100%', height: '100%'}">
-        </div>
+        <v-charts :options="getOptions()" style="width: 100%; height: 100%"></v-charts>
       </template>
       <template v-slot:footer>
         <div>
@@ -23,38 +22,40 @@ export default {
   name: 'TotalOrders',
   mixins: [commonCardMixins],
   mounted () {
-    let chartDom = document.getElementById('total-orders-chart')
-    let echart = this.$echarts.init(chartDom)
-    echart.setOption({
-      xAxis: {
-        type: 'category',
-        show: false,
-        boundaryGap: false
-      },
-      yAxis: {
-        show: false
-      },
-      series: [{
-        type: 'line',
-        data: [200, 300, 657, 345, 200, 300, 657, 345],
-        areaStyle: {
-          color: 'purple'
+  },
+  methods: {
+    getOptions () {
+      return {
+        xAxis: {
+          type: 'category',
+          show: false,
+          boundaryGap: false
         },
-        lineStyle: {
-          width: 0
+        yAxis: {
+          show: false
         },
-        itemStyle: {
-          opacity: 0
-        },
-        smooth: true
-      }],
-      grid: {
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0
+        series: [{
+          type: 'line',
+          data: [200, 300, 657, 345, 200, 300, 657, 345],
+          areaStyle: {
+            color: 'purple'
+          },
+          lineStyle: {
+            width: 0
+          },
+          itemStyle: {
+            opacity: 0
+          },
+          smooth: true
+        }],
+        grid: {
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0
+        }
       }
-    })
+    }
   }
 }
 </script>

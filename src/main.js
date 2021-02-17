@@ -10,10 +10,13 @@ import axios from 'axios'
 import store from './store'
 import Fragment from 'vue-fragment'
 import * as echarts from 'echarts'
+import VueECharts from 'vue-echarts'
+import './style/index.css'
 Vue.use(Fragment.Plugin)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts
+Vue.component('v-charts', VueECharts)
 axios.interceptors.request.use(config => {
   if (config.url.indexOf('/api/user/login') !== -1) {
     config.headers['Content-Type'] = 'multipart/form-data'
